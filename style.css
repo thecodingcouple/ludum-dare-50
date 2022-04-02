@@ -1,10 +1,29 @@
-header {
+body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
 
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+header,
+footer {
+    background: black;
+    padding: 10px;
+}
+
+header,
+footer,
+a {
+    color: white;
 }
 
 main {
-    height: 100%;
-    background: black;
+    flex-grow: 1;
+    background: green;
 }
 
 footer {
