@@ -10,6 +10,7 @@ TBD
 
 * [Phase Game Framework](https://phaser.io/)
 * [Visual Studio Code](https://code.visualstudio.com/)
+* [Live Server (VSC Extension)](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
 
 ## Third Party Assets
 
