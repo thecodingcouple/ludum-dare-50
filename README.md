@@ -20,6 +20,18 @@ TBD
 
 * ???
 
+## Project Setup
+
+```
+npm install
+```
+
+### Hot reloads for development
+
+```
+npm run start
+```
+
 ## License (MIT)
 
 MIT License
