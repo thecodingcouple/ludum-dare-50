@@ -1,9 +1,13 @@
 import Phaser from './src/phaser.js';
+import Game from './src/scenes/game.js';
 
 const config = {
     width: 800,
     height: 600,
-    type: Phaser.AUTO
+    backgroundColor: '#f0e9d2',
+    parent: "game-container",
+    type: Phaser.AUTO,
+    scene: Game
 }
 
-const game = new Phaser.Game(config);
+export default new Phaser.Game(config);

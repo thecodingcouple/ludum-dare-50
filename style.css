@@ -1,31 +1,48 @@
+:root {
+    --light-beige: rgb(240, 233, 210);
+    --medium-beige: rgb(230, 221, 196);
+    --teal: rgb(103, 137, 131);
+    --dark-blue: rgb(24, 29, 49);
+}
+
 body {
     height: 100vh;
     margin: 0;
     padding: 0;
-}
-
-body {
     display: flex;
     flex-direction: column;
+    font-family: 'Fredoka One', sans-serif;
 }
 
 header,
 footer {
-    background: black;
-    padding: 10px;
+    background: var(--dark-blue);
+    padding: 15px 30px;
 }
 
 header,
 footer,
 a {
-    color: white;
+    color: var(--light-beige);
+    text-decoration: none;
 }
 
 main {
     flex-grow: 1;
-    background: green;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(var(--teal), var(--dark-blue));
+}
+
+header {
+    font-size: 2rem;
 }
 
 footer {
+    text-align: center;
+}
 
+main > section {
+    box-shadow: 2px 4px 4px var(--dark-blue);
 }
