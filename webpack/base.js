@@ -23,10 +23,10 @@ module.exports = {
         },
         {
           test: [/\.vert$/, /\.frag$/],
-          type: 'asset/resource'
+          type: 'asset/source'
         },
         {
-          test: /\.(gif|png|jpe?g|svg|xml)$/i,
+          test: /\.(gif|wav|png|jpe?g|svg|xml|)$/i,
           type: 'asset/resource'
         }
       ]
