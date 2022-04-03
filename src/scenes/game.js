@@ -94,8 +94,11 @@ export default class Game extends Phaser.Scene {
         this.rectangle.angle -= this.speed;
 
         // Check to see if full rotation has completed
-        if(Math.floor(this.rectangle.angle) == 0) {
+        if (Math.floor(this.rectangle.angle) == 0) {
             this.rotation += 1;
+
+            // TODO: calculate RPM
+            this.rpm = this.speed;
 
             this.text.setText([
                 `Rotation: ${this.rotation}`,
@@ -103,7 +106,7 @@ export default class Game extends Phaser.Scene {
             ]);
 
             if(this.speed < MAX_ROTATION_SPEED) {
-                this.speed += 0.005;
+                this.speed += 0.025;
             }
         }
     }
