@@ -8,7 +8,16 @@ const config = {
     backgroundColor: '#f0e9d2',
     parent: "game-container",
     type: Phaser.AUTO,
-    scene: Game
-}
+    scene: [ Game ],
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: {
+                y: 200,
+            },
+            debug: true
+        }
+    }
+};
 
 export default new Phaser.Game(config);
