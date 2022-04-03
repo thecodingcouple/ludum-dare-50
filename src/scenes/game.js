@@ -6,10 +6,10 @@ export default class Game extends Phaser.Scene {
     }
 
     preload() {
-        this.load.audio('background-loop', '../../public/assets/music.loop.wav');
+        this.load.audio('background-loop', '../../public/assets/music/loop.wav');
     }
 
     create() {
-        this.sound.add('background-loop').play('loop');
+        // this.sound.add('background-loop').play();
     }
 }
