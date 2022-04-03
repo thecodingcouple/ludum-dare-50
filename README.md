@@ -14,6 +14,7 @@ TBD
 ## Third Party Assets
 
 * [PP Fight or Flight Heavy Loop music](https://www.gamedevmarket.net/asset/pixel-platformer-music-pack/)
+* [Jump, Hit and Death sound effects](https://www.gamedevmarket.net/asset/mega-sfx-pack/)
 
 ## Useful Resources
 
