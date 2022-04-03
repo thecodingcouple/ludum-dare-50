@@ -1,4 +1,4 @@
-import Phaser from './node_modules/src/phaser.js';
+import Phaser from './src/phaser.js';
 
 const config = {
     width: 800,

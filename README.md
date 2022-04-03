@@ -13,7 +13,7 @@ TBD
 
 ## Third Party Assets
 
-* ???
+* [PP Fight or Flight Heavy Loop music](https://www.gamedevmarket.net/asset/pixel-platformer-music-pack/)
 
 ## Useful Resources
 
