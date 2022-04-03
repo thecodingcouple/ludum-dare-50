@@ -1,5 +1,8 @@
 import Phaser from 'phaser';
 
+// Constants file
+import { DARK_BLUE_HEXCODE, MAX_ROTATION_SPEED } from '../constants.js';
+
 // Asset Imports
 import stickFigurePng from '../../public/assets/images/spritesheet.png';
 import backgroundMusic from '../../public/assets/music/loop.wav';
@@ -10,8 +13,11 @@ import jumpWav from '../../public/assets/music/jump.wav';
 export default class Game extends Phaser.Scene {
     // @type { Phaser.Physics.Arcade.Sprite }
     //player;
-
     rectangle;
+    text;
+    rotation = 0;
+    rpm = 0;
+    speed = 0.25;
 
     constructor() {
         super('game');
@@ -35,16 +41,13 @@ export default class Game extends Phaser.Scene {
 
     create() {
         // game text
-        this.data.set('rotations', 0);
-        this.data.set('rpm', 15);
-
-        let text = this.add.text(20, 10, '', {
+        this.text = this.add.text(20, 10, '', {
             font: '24px Fredoka One',
             fill: "#181d31"
         });
-        text.setText([
-            `Rotation: ${this.data.get('rotations')}`,
-            `RPM: ${this.data.get('rpm')}`
+        this.text.setText([
+            `Rotation: ${this.rotation}`,
+            `RPM: ${this.rpm}`
         ]);
 
         // background music loop
@@ -59,10 +62,10 @@ export default class Game extends Phaser.Scene {
 
         // main rectangle
         this.rectangle = this.add.rectangle(400, 300, 275, 275);
-        this.rectangle.setStrokeStyle(5, 0x181d31);
+        this.rectangle.setStrokeStyle(5, DARK_BLUE_HEXCODE);
 
         // midpoint circle
-        let circle = this.add.circle(400, 300, 20, 0x181d31);
+        let circle = this.add.circle(400, 300, 20, DARK_BLUE_HEXCODE);
 
         // player character 
         var config = {
@@ -88,6 +91,20 @@ export default class Game extends Phaser.Scene {
     }
 
     update() {
-        this.rectangle.rotation -= 0.002;
+        this.rectangle.angle -= this.speed;
+
+        // Check to see if full rotation has completed
+        if(Math.floor(this.rectangle.angle) == 0) {
+            this.rotation += 1;
+
+            this.text.setText([
+                `Rotation: ${this.rotation}`,
+                `RPM: ${this.rpm}`
+            ]);
+
+            if(this.speed < MAX_ROTATION_SPEED) {
+                this.speed += 0.005;
+            }
+        }
     }
 }
