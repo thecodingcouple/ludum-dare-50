@@ -61,7 +61,7 @@ export default class Game extends Phaser.Scene {
         let jumpSound = this.sound.add('jump');
 
         // main rectangle
-        this.rectangle = this.add.rectangle(400, 300, 275, 275);
+        this.rectangle = this.add.rectangle(400, 300, 300, 300);
         this.rectangle.setStrokeStyle(5, DARK_BLUE_HEXCODE);
 
         // midpoint circle
