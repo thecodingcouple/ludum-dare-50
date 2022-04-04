@@ -82,8 +82,15 @@ export default class Game extends Phaser.Scene {
         // create stick person running animation
         this.anims.create(config);
 
-        let player = this.add.sprite(400, 150, 'stick-person').play('runningAnimation');
+        let player = this.add.sprite(400, 100, 'stick-person').play('runningAnimation');
 
+        this.physics.add.existing(this.rectangle);
+        this.physics.add.existing(player)
+        this.rectangle.body.allowGravity = false;
+        this.rectangle.body.angularVelocity = 5;
+        this.rectangle.body.angularAcceleration = 5;
+
+        
         // Add physics to stick person
         //this.player = this.physics.add.sprite(0, 0, 'stick-person');
 
@@ -91,23 +98,9 @@ export default class Game extends Phaser.Scene {
     }
 
     update() {
-        this.rectangle.angle -= this.speed;
-
-        // Check to see if full rotation has completed
-        if (Math.floor(this.rectangle.angle) == 0) {
-            this.rotation += 1;
-
-            // TODO: calculate RPM
-            this.rpm = this.speed;
-
-            this.text.setText([
-                `Rotation: ${this.rotation}`,
-                `RPM: ${this.rpm}`
-            ]);
-
-            if(this.speed < MAX_ROTATION_SPEED) {
-                this.speed += 0.025;
-            }
-        }
+        this.text.setText([
+            `Rotation: ${this.rotation}`,
+            `RPM: ${this.rpm}`
+        ]);
     }
 }
