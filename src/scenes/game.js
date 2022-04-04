@@ -61,7 +61,7 @@ export default class Game extends Phaser.Scene {
         let jumpSound = this.sound.add('jump');
 
         // main rectangle
-        this.rectangle = this.add.rectangle(400, 300, 300, 300);
+        this.rectangle = this.add.rectangle(400, 300, 325, 325);
         this.rectangle.setStrokeStyle(5, DARK_BLUE_HEXCODE);
 
         // midpoint circle
@@ -84,11 +84,12 @@ export default class Game extends Phaser.Scene {
 
         let player = this.add.sprite(400, 100, 'stick-person').play('runningAnimation');
 
+        // Added physics
         this.physics.add.existing(this.rectangle);
         this.physics.add.existing(player)
         this.rectangle.body.allowGravity = false;
-        this.rectangle.body.angularVelocity = 5;
-        this.rectangle.body.angularAcceleration = 5;
+        this.rectangle.body.angularVelocity = -2;
+        this.rectangle.body.angularAcceleration = -2;
 
         
         // Add physics to stick person
@@ -98,6 +99,10 @@ export default class Game extends Phaser.Scene {
     }
 
     update() {
+        // if(this.rectangle.body.angularVelocity > -1000) {
+        //     this.rectangle.body.angularAcceleration = 0;
+        // }
+
         this.text.setText([
             `Rotation: ${this.rotation}`,
             `RPM: ${this.rpm}`
