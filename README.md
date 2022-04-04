@@ -21,6 +21,7 @@ TBD
 * [Color Hunt (palette generator)](https://colorhunt.co/palette/f0e9d2e6ddc4678983181d31)
 * [Phaser 3 Webpack Project template](https://github.com/photonstorm/phaser3-project-template/blob/master/package.json) (it was a little out of date, needed to update from Webpack 4 to Webpack 5)
 * [Infinite Jumper in Phase with Modern JavaScript](https://www.goodreads.com/book/show/55219493-infinite-jumper-in-phaser-3-with-modern-javascript)
+* [Arcade physics for generic solid shapes](https://phaser.discourse.group/t/arcade-physics-generic-solid-color-shapes/6894)
 
 ## Project Setup
 
