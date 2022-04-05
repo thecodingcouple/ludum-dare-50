@@ -85,24 +85,24 @@ export default class Game extends Phaser.Scene {
         let player = this.add.sprite(400, 100, 'stick-person').play('runningAnimation');
 
         // Added physics
-        this.physics.add.existing(this.rectangle);
-        this.physics.add.existing(player)
-        this.rectangle.body.allowGravity = false;
-        this.rectangle.body.angularVelocity = -2;
-        this.rectangle.body.angularAcceleration = -2;
+        this.matter.add.gameObject(this.rectangle, {isStatic: true});
+        this.rectangle.setFriction(1, 0, Infinity);
+        this.matter.add.gameObject(player);
 
-        
-        // Add physics to stick person
-        //this.player = this.physics.add.sprite(0, 0, 'stick-person');
-
-        // Add collider
+        var tween = this.tweens.addCounter({
+            from: 0,
+            to: -360,
+            duration: 5000,
+            repeat: -1,
+            onUpdate: (tween) =>
+            {
+                this.rectangle.angle = tween.getValue();
+            }
+        });
     }
 
     update() {
-        // if(this.rectangle.body.angularVelocity > -1000) {
-        //     this.rectangle.body.angularAcceleration = 0;
-        // }
-
+  
         this.text.setText([
             `Rotation: ${this.rotation}`,
             `RPM: ${this.rpm}`

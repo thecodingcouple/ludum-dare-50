@@ -10,13 +10,7 @@ const config = {
     type: Phaser.AUTO,
     scene: [ Game ],
     physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: {
-                y: 200,
-            },
-            debug: true
-        }
+        default: 'matter',
     }
 };
 
