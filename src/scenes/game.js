@@ -1,7 +1,10 @@
 import Phaser from 'phaser';
 
 // Constants file
-import { DARK_BLUE_HEXCODE, MAX_ROTATION_SPEED } from '../constants.js';
+import { 
+    DARK_BLUE_HEXCODE, 
+    MIN_DURATION,
+    MILLISECONDS_PER_MINUTE } from '../constants.js';
 
 // Asset Imports
 import stickFigurePng from '../../public/assets/images/spritesheet.png';
@@ -18,6 +21,7 @@ export default class Game extends Phaser.Scene {
     rotation = 0;
     rpm = 0;
     speed = 0.25;
+    duration = 10000;
 
     constructor() {
         super('game');
@@ -45,9 +49,12 @@ export default class Game extends Phaser.Scene {
             font: '24px Fredoka One',
             fill: "#181d31"
         });
+
+        
+        this.rpm = MILLISECONDS_PER_MINUTE / this.duration;
         this.text.setText([
             `Rotation: ${this.rotation}`,
-            `RPM: ${this.rpm}`
+            `RPM: ${this.rpm.toFixed(2)}`
         ]);
 
         // background music loop
@@ -89,23 +96,33 @@ export default class Game extends Phaser.Scene {
         this.rectangle.setFriction(1, 0, Infinity);
         this.matter.add.gameObject(player);
 
-        var tween = this.tweens.addCounter({
+        // Rotate rectangle
+        const tween = this.tweens.addCounter({
             from: 0,
             to: -360,
-            duration: 5000,
+            duration: this.duration,
             repeat: -1,
-            onUpdate: (tween) =>
-            {
+            onUpdate: (tween) => {
                 this.rectangle.angle = tween.getValue();
+            },
+            onRepeat: (tween) => {
+                this.rotation += 1;
+                this.rpm = MILLISECONDS_PER_MINUTE / tween.data[0].duration;
+
+                this.text.setText([
+                    `Rotation: ${this.rotation}`,
+                    `RPM: ${this.rpm.toFixed(2)}`
+                ]);
+
+                // decrease duration
+                if(tween.data[0].duration > MIN_DURATION) {
+                    tween.data[0].duration -= 500;
+                }
             }
         });
     }
 
     update() {
-  
-        this.text.setText([
-            `Rotation: ${this.rotation}`,
-            `RPM: ${this.rpm}`
-        ]);
+   
     }
 }
