@@ -29,7 +29,7 @@ export default class Game extends Phaser.Scene {
             {
                 frameWidth: 10,
                 frameHeight: 16,
-                endFrame: 4
+                endFrame: 7
             });
 
         // add audio 
@@ -68,21 +68,21 @@ export default class Game extends Phaser.Scene {
         let circle = this.add.circle(400, 300, 20, DARK_BLUE_HEXCODE);
 
         // player character 
-        var config = {
-            key: 'runningAnimation',
+        var runningRightConfig = {
+            key: 'runningRightAnimation',
             frames: this.anims.generateFrameNumbers('stick-person', {
-                start: 2,
+                start: 3,
                 end: 4,
-                first: 2
+                first: 3
             }),
-            framerate: 4,
+            framerate: 1,
             repeat: -1
         };
 
         // create stick person running animation
-        this.anims.create(config);
+        this.anims.create(runningRightConfig);
 
-        let player = this.add.sprite(400, 100, 'stick-person').play('runningAnimation');
+        let player = this.add.sprite(400, 100, 'stick-person').play('runningRightAnimation');
 
         // Added physics
         this.matter.add.gameObject(this.rectangle, {isStatic: true});
