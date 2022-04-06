@@ -4,7 +4,8 @@ import Phaser from 'phaser';
 import { 
     DARK_BLUE_HEXCODE, 
     MIN_DURATION,
-    MILLISECONDS_PER_MINUTE } from '../constants.js';
+    MILLISECONDS_PER_MINUTE,
+    SPACE_KEYBOARD_CODE } from '../constants.js';
 
 // Asset Imports
 import stickFigurePng from '../../public/assets/images/spritesheet.png';
@@ -14,14 +15,16 @@ import hitWav from '../../public/assets/music/hit.wav';
 import jumpWav from '../../public/assets/music/jump.wav';
 
 export default class Game extends Phaser.Scene {
-    // @type { Phaser.Physics.Arcade.Sprite }
-    //player;
+    player;
     rectangle;
     text;
     rotation = 0;
     rpm = 0;
     speed = 0.25;
     duration = 10000;
+    jumpSound;
+    hitSound;
+    explosionSound;
 
     constructor() {
         super('game');
@@ -44,6 +47,7 @@ export default class Game extends Phaser.Scene {
     }
 
     create() {
+
         // game text
         this.text = this.add.text(20, 10, '', {
             font: '24px Fredoka One',
@@ -63,9 +67,9 @@ export default class Game extends Phaser.Scene {
         backgroundMusic.play()
 
         // game sound effects
-        let explosionSound = this.sound.add('explosion');
-        let hitSound = this.sound.add('hit');
-        let jumpSound = this.sound.add('jump');
+        this.explosionSound = this.sound.add('explosion');
+        this.hitSound = this.sound.add('hit');
+        this.jumpSound = this.sound.add('jump');
 
         // main rectangle
         this.rectangle = this.add.rectangle(400, 300, 325, 325);
@@ -74,27 +78,55 @@ export default class Game extends Phaser.Scene {
         // midpoint circle
         let circle = this.add.circle(400, 300, 20, DARK_BLUE_HEXCODE);
 
-        // player character 
-        var runningRightConfig = {
-            key: 'runningRightAnimation',
+        // create stick person running animation
+        this.anims.create({
+            key: 'run',
             frames: this.anims.generateFrameNumbers('stick-person', {
                 start: 3,
                 end: 4,
                 first: 3
             }),
-            framerate: 1,
+            framerate: 2,
             repeat: -1
-        };
+        });
 
-        // create stick person running animation
-        this.anims.create(runningRightConfig);
+        // create stick person jump animation
+        this.anims.create({
+            key: 'jump',
+            frames: this.anims.generateFrameNumbers('stick-person', {
+                start: 0,
+                end: 2,
+                first: 0
+            }),
+            framerate: 2
+        });
 
-        let player = this.add.sprite(400, 100, 'stick-person').play('runningRightAnimation');
+        // create stick person idle animation
+        this.anims.create({
+            key: 'idle',
+            frames: this.anims.generateFrameNumbers('stick-person', {
+                start: 0,
+                end: 0,
+                first: 0
+            }),
+            framerate: 2
+        });
+
+        this.player = this.add.sprite(400, 100, 'stick-person');
+
+        this.input.keyboard.on('keydown', event => {
+
+            if(event.keyCode === SPACE_KEYBOARD_CODE) {
+                this.player.play('jump');
+                this.jumpSound.play();
+            }
+           
+        });
 
         // Added physics
         this.matter.add.gameObject(this.rectangle, {isStatic: true});
         this.rectangle.setFriction(1, 0, Infinity);
-        this.matter.add.gameObject(player);
+        this.matter.add.gameObject(this.player);
 
         // Rotate rectangle
         const tween = this.tweens.addCounter({
@@ -123,6 +155,6 @@ export default class Game extends Phaser.Scene {
     }
 
     update() {
-   
+        
     }
 }
