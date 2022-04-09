@@ -10,9 +10,9 @@ import {
 // Asset Imports
 import stickFigurePng from '../../public/assets/images/spritesheet.png';
 import backgroundMusic from '../../public/assets/music/loop.wav';
-import explosionWav from '../../public/assets/music/explosion.wav';
 import hitWav from '../../public/assets/music/hit.wav';
 import jumpWav from '../../public/assets/music/jump.wav';
+import screamMp3 from '../../public/assets/sfx/scream.mp3';
 
 export default class Game extends Phaser.Scene {
     player;
@@ -24,7 +24,8 @@ export default class Game extends Phaser.Scene {
     duration = 10000;
     jumpSound;
     hitSound;
-    explosionSound;
+    screamSound;
+    playerDied = false;
 
     constructor() {
         super('game');
@@ -41,9 +42,9 @@ export default class Game extends Phaser.Scene {
 
         // add audio 
         this.load.audio('background-music', backgroundMusic);
-        this.load.audio('explosion', explosionWav);
         this.load.audio('hit', hitWav);
         this.load.audio('jump', jumpWav);
+        this.load.audio('scream', screamMp3);
     }
 
     create() {
@@ -67,9 +68,9 @@ export default class Game extends Phaser.Scene {
         backgroundMusic.play()
 
         // game sound effects
-        this.explosionSound = this.sound.add('explosion');
         this.hitSound = this.sound.add('hit');
         this.jumpSound = this.sound.add('jump');
+        this.screamSound = this.sound.add('scream');
 
         // main rectangle
         this.rectangle = this.add.rectangle(400, 300, 325, 325);
@@ -118,11 +119,14 @@ export default class Game extends Phaser.Scene {
 
             if(event.keyCode === SPACE_KEYBOARD_CODE) {
                 this.player.play('jump');
-                this.jumpSound.play();
+
+                if(!this.playerDied) {
+                    this.jumpSound.play();
+                }
             }
            
         });
-
+        
         // Added physics
         this.matter.add.gameObject(this.rectangle, {isStatic: true});
         this.rectangle.setFriction(1, 0, Infinity);
@@ -155,6 +159,10 @@ export default class Game extends Phaser.Scene {
     }
 
     update() {
-        
+        // detect when the player fell off the screen
+        if(!this.scene.scene.cameras.main.worldView.contains(this.player.x, this.player.y) && !this.playerDied) {
+            this.screamSound.play();
+            this.playerDied = true;
+        }
     }
 }

@@ -23,6 +23,11 @@ TBD
 * [Infinite Jumper in Phase with Modern JavaScript](https://www.goodreads.com/book/show/55219493-infinite-jumper-in-phaser-3-with-modern-javascript)
 * [Arcade physics for generic solid shapes](https://phaser.discourse.group/t/arcade-physics-generic-solid-color-shapes/6894)
 * [Phaser Discourse Group](https://phaser.discourse.group/)
+* How to detect when a sprite is off the screen:
+    * https://www.html5gamedevs.com/topic/1564-destroy-off-screen-sprites-using-events/
+    * https://phaser.io/examples/v2/sprites/out-of-bounds
+    * https://phaser.discourse.group/t/out-of-bounds-checking/905
+    * https://stackoverflow.com/questions/53091837/outofboundskill-equivalent-in-phaser-3
 
 ## Project Setup
 
