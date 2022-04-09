@@ -28,6 +28,7 @@ TBD
     * https://phaser.io/examples/v2/sprites/out-of-bounds
     * https://phaser.discourse.group/t/out-of-bounds-checking/905
     * https://stackoverflow.com/questions/53091837/outofboundskill-equivalent-in-phaser-3
+    * https://phaser.discourse.group/t/what-is-incamera-in-phaser-3/7031/2
 
 ## Project Setup
 
