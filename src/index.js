@@ -11,6 +11,7 @@ const config = {
     scene: [ Game ],
     physics: {
         default: 'matter',
+        debug: true
     }
 };
 

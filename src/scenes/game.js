@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import StickPerson from '../stickPerson';
 
 // Constants file
 import { 
@@ -8,46 +9,34 @@ import {
     SPACE_KEYBOARD_CODE } from '../constants.js';
 
 // Asset Imports
-import stickFigurePng from '../../public/assets/images/spritesheet.png';
 import backgroundMusic from '../../public/assets/music/loop.wav';
 import hitWav from '../../public/assets/music/hit.wav';
-import jumpWav from '../../public/assets/music/jump.wav';
-import screamMp3 from '../../public/assets/sfx/scream.mp3';
+
 
 export default class Game extends Phaser.Scene {
-    player;
     rectangle;
     text;
     rotation = 0;
     rpm = 0;
     speed = 0.25;
     duration = 10000;
-    jumpSound;
     hitSound;
-    screamSound;
-    playerDied = false;
 
     constructor() {
         super('game');
+        this.player = new StickPerson(this);
     }
 
     preload() {
-        // add images
-        this.load.spritesheet('stick-person', stickFigurePng, 
-            {
-                frameWidth: 10,
-                frameHeight: 16,
-                endFrame: 7
-            });
-
+        this.player.loadSceneAssets();
         // add audio 
         this.load.audio('background-music', backgroundMusic);
         this.load.audio('hit', hitWav);
-        this.load.audio('jump', jumpWav);
-        this.load.audio('scream', screamMp3);
+        
     }
 
     create() {
+        this.cursors = this.input.keyboard.createCursorKeys();
 
         // game text
         this.text = this.add.text(20, 10, '', {
@@ -69,8 +58,7 @@ export default class Game extends Phaser.Scene {
 
         // game sound effects
         this.hitSound = this.sound.add('hit');
-        this.jumpSound = this.sound.add('jump');
-        this.screamSound = this.sound.add('scream');
+        
 
         // main rectangle
         this.rectangle = this.add.rectangle(400, 300, 325, 325);
@@ -79,59 +67,12 @@ export default class Game extends Phaser.Scene {
         // midpoint circle
         let circle = this.add.circle(400, 300, 20, DARK_BLUE_HEXCODE);
 
-        // create stick person running animation
-        this.anims.create({
-            key: 'run',
-            frames: this.anims.generateFrameNumbers('stick-person', {
-                start: 3,
-                end: 4,
-                first: 3
-            }),
-            framerate: 2,
-            repeat: -1
-        });
-
-        // create stick person jump animation
-        this.anims.create({
-            key: 'jump',
-            frames: this.anims.generateFrameNumbers('stick-person', {
-                start: 0,
-                end: 2,
-                first: 0
-            }),
-            framerate: 2
-        });
-
-        // create stick person idle animation
-        this.anims.create({
-            key: 'idle',
-            frames: this.anims.generateFrameNumbers('stick-person', {
-                start: 0,
-                end: 0,
-                first: 0
-            }),
-            framerate: 2
-        });
-
-        this.player = this.add.sprite(400, 100, 'stick-person');
-
-        this.input.keyboard.on('keydown', event => {
-
-            if(event.keyCode === SPACE_KEYBOARD_CODE) {
-                this.player.play('jump');
-
-                if(!this.playerDied) {
-                    this.jumpSound.play();
-                }
-            }
-           
-        });
-        
         // Added physics
-        this.matter.add.gameObject(this.rectangle, {isStatic: true});
-        this.rectangle.setFriction(1, 0, Infinity);
-        this.matter.add.gameObject(this.player);
+        this.matter.add.gameObject(this.rectangle, {isStatic: true, label: 'box'});
+        //this.rectangle.setFriction(1, 0, Infinity);
 
+        this.player.createSceneFeatures();
+        
         // Rotate rectangle
         const tween = this.tweens.addCounter({
             from: 0,
@@ -159,10 +100,21 @@ export default class Game extends Phaser.Scene {
     }
 
     update() {
-        // detect when the player fell off the screen
-        if(!this.scene.scene.cameras.main.worldView.contains(this.player.x, this.player.y) && !this.playerDied) {
-            this.screamSound.play();
-            this.playerDied = true;
+        if (this.cursors.right.isDown) {
+            this.player.runRight();
+        } else if (this.cursors.left.isDown) {
+            this.player.runLeft();
+        } else {
+            this.player.stopRunning();
+        }
+
+        if (this.cursors.up.isDown) {
+            this.player.jump();
+        }
+
+        if (this.player.isDead && !this.deadLastUpdate) {
+            this.deadLastUpdate = true;
+            this.player.scream();
         }
     }
 }
