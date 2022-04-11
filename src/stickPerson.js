@@ -53,9 +53,9 @@ export default class StickPerson {
             anims.create({
                 key: 'run-right',
                 frames: anims.generateFrameNumbers('stick-person', {
-                    start: 3,
-                    end: 4,
-                    first: 3
+                    start: 4,
+                    end: 3,
+                    first: 4
                 }),
                 framerate: 2,
                 repeat: -1
@@ -65,9 +65,9 @@ export default class StickPerson {
             anims.create({
                 key: 'run-left',
                 frames: anims.generateFrameNumbers('stick-person', {
-                    start: 5,
-                    end: 6,
-                    first: 5
+                    start: 6,
+                    end: 7,
+                    first: 6
                 }),
                 framerate: 2,
                 repeat: -1
@@ -77,11 +77,10 @@ export default class StickPerson {
             anims.create({
                 key: 'jump',
                 frames: anims.generateFrameNumbers('stick-person', {
-                    start: 0,
+                    start: 1,
                     end: 2,
-                    first: 0
                 }),
-                framerate: -1
+                framerate: 10
             });
     
             // create stick person idle animation
