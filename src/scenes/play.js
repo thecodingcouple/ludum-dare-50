@@ -3,6 +3,7 @@ import StickPerson from '../stickPerson';
 
 // Constants file
 import { 
+    DEFAULT_DURATION_IN_MS,
     DARK_BLUE_HEXCODE, 
     MIN_DURATION,
     MILLISECONDS_PER_MINUTE,
@@ -19,12 +20,13 @@ export default class Play extends Phaser.Scene {
     rotation = 0;
     rpm = 0;
     speed = 0.25;
-    duration = 10000;
+    duration = DEFAULT_DURATION_IN_MS;
     hitSound;
 
     constructor() {
         super('play');
         this.player = new StickPerson(this);
+
     }
 
     preload() {
@@ -60,7 +62,7 @@ export default class Play extends Phaser.Scene {
         
 
         // main rectangle
-        this.rectangle = this.add.rectangle(400, 300, 365, 365);
+        this.rectangle = this.add.rectangle(400, 300, 400, 400);
         this.rectangle.setStrokeStyle(5, DARK_BLUE_HEXCODE);
 
         // midpoint circle
@@ -114,7 +116,8 @@ export default class Play extends Phaser.Scene {
         if (this.player.isDead && !this.deadLastUpdate) {
             this.deadLastUpdate = true;
             this.player.scream();
-            this.scene.start('game-over');
+
+            this.scene.switch('game-over');
         }
     }
 }
