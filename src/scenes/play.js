@@ -13,7 +13,7 @@ import backgroundMusic from '../../public/assets/music/loop.wav';
 import hitWav from '../../public/assets/music/hit.wav';
 
 
-export default class Game extends Phaser.Scene {
+export default class Play extends Phaser.Scene {
     rectangle;
     text;
     rotation = 0;
@@ -23,7 +23,7 @@ export default class Game extends Phaser.Scene {
     hitSound;
 
     constructor() {
-        super('game');
+        super('play');
         this.player = new StickPerson(this);
     }
 
@@ -32,7 +32,6 @@ export default class Game extends Phaser.Scene {
         // add audio 
         this.load.audio('background-music', backgroundMusic);
         this.load.audio('hit', hitWav);
-        
     }
 
     create() {
@@ -61,7 +60,7 @@ export default class Game extends Phaser.Scene {
         
 
         // main rectangle
-        this.rectangle = this.add.rectangle(400, 300, 325, 325);
+        this.rectangle = this.add.rectangle(400, 300, 365, 365);
         this.rectangle.setStrokeStyle(5, DARK_BLUE_HEXCODE);
 
         // midpoint circle
@@ -108,13 +107,14 @@ export default class Game extends Phaser.Scene {
             this.player.stopRunning();
         }
 
-        if (this.cursors.up.isDown) {
+        if (this.cursors.up.isDown || this.cursors.space.isDown) {
             this.player.jump();
         }
 
         if (this.player.isDead && !this.deadLastUpdate) {
             this.deadLastUpdate = true;
             this.player.scream();
+            this.scene.start('game-over');
         }
     }
 }

@@ -1,5 +1,7 @@
 import Phaser from 'phaser';
-import Game from './scenes/game.js';
+import Start from './scenes/start.js';
+import Play from './scenes/play.js';
+import GameOver from './scenes/gameOver.js';
 import "../style.css"
 
 const config = {
@@ -8,7 +10,7 @@ const config = {
     backgroundColor: '#f0e9d2',
     parent: "game-container",
     type: Phaser.AUTO,
-    scene: [ Game ],
+    scene: [ Start, Play, GameOver ],
     physics: {
         default: 'matter',
         debug: true

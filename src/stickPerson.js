@@ -41,16 +41,17 @@ export default class StickPerson {
         });
 
         this.scene.load.audio('jump', jumpWav);
-        this.scene.load.audio('scream', screamMp3);
+        let scream = this.scene.load.audio('scream', screamMp3);
+        scream.once('complete', this.onScreamCompleted);
     }
 
     createSceneFeatures() {
             let matter = this.scene.matter;
             let anims = this.scene.anims;
             let sound = this.scene.sound;
-            // create stick person running animation
+            // create stick person running right animation
             anims.create({
-                key: 'run',
+                key: 'run-right',
                 frames: anims.generateFrameNumbers('stick-person', {
                     start: 3,
                     end: 4,
@@ -60,6 +61,18 @@ export default class StickPerson {
                 repeat: -1
             });
     
+            // create stick person running left animation
+            anims.create({
+                key: 'run-left',
+                frames: anims.generateFrameNumbers('stick-person', {
+                    start: 5,
+                    end: 6,
+                    first: 5
+                }),
+                framerate: 2,
+                repeat: -1
+            });
+
             // create stick person jump animation
             anims.create({
                 key: 'jump',
@@ -68,7 +81,7 @@ export default class StickPerson {
                     end: 2,
                     first: 0
                 }),
-                framerate: 2
+                framerate: -1
             });
     
             // create stick person idle animation
@@ -139,7 +152,7 @@ export default class StickPerson {
 
     runLeft() {
         if (!this.isBlockedLeft) {
-            this.matterSprite.anims.play("run");
+            this.matterSprite.anims.play("run-left");
             this.matterSprite.setVelocityX(-1);
         } else {
             this.matterSprite.anims.play("idle");
@@ -148,7 +161,7 @@ export default class StickPerson {
 
     runRight() {
         if (!this.isBlockedRight) {
-            this.matterSprite.anims.play("run");
+            this.matterSprite.anims.play("run-right");
             this.matterSprite.setVelocityX(1);
         } else {
             this.matterSprite.anims.play("idle");
@@ -171,5 +184,11 @@ export default class StickPerson {
 
     scream() {
         this.scene.sound.play("scream");
+
+    }
+
+    onScreamCompleted(event) {
+        console.log('***');
+        console.dir(event);
     }
 }
