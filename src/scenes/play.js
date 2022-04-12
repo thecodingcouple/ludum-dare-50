@@ -25,7 +25,7 @@ export default class Play extends Phaser.Scene {
     hitSound;
 
     /**
-     * 
+     * Contructor
      */
     constructor() {
         super('play');
@@ -33,7 +33,7 @@ export default class Play extends Phaser.Scene {
     }
 
     /**
-     * 
+     * Preload
      */
     preload() {
         this.player.loadSceneAssets();
@@ -47,7 +47,7 @@ export default class Play extends Phaser.Scene {
     }
 
     /**
-     * 
+     * Create
      */
     create() {
         this.cursors = this.input.keyboard.createCursorKeys();
