@@ -78,7 +78,7 @@ export default class StickPerson {
                 key: 'jump',
                 frames: anims.generateFrameNumbers('stick-person', {
                     start: 1,
-                    end: 2,
+                    end: 2
                 }),
                 framerate: 10
             });
@@ -189,5 +189,9 @@ export default class StickPerson {
     onScreamCompleted(event) {
         console.log('***');
         console.dir(event);
+    }
+
+    reset() {
+        this.matterSprite.setPosition(this.startX, this.startY);
     }
 }

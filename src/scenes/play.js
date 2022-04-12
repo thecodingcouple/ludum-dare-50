@@ -26,7 +26,6 @@ export default class Play extends Phaser.Scene {
     constructor() {
         super('play');
         this.player = new StickPerson(this);
-
     }
 
     preload() {
@@ -34,6 +33,10 @@ export default class Play extends Phaser.Scene {
         // add audio 
         this.load.audio('background-music', backgroundMusic);
         this.load.audio('hit', hitWav);
+
+        this.events.on('wake', () => {
+            this.resetGame();
+        });
     }
 
     create() {
@@ -119,5 +122,18 @@ export default class Play extends Phaser.Scene {
 
             this.scene.switch('game-over');
         }
+    }
+
+    resetGame() {
+        this.player.reset();
+        this.duration = DEFAULT_DURATION_IN_MS;
+        this.rotation = 0;
+        this.deadLastUpdate = false;
+
+        this.rpm = MILLISECONDS_PER_MINUTE / this.duration;
+        this.text.setText([
+            `Rotation: ${this.rotation}`,
+            `RPM: ${this.rpm.toFixed(2)}`
+        ]);
     }
 }
