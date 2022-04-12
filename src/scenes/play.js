@@ -16,6 +16,7 @@ import hitWav from '../../public/assets/music/hit.wav';
 
 export default class Play extends Phaser.Scene {
     rectangle;
+    rectangleTween;
     text;
     rotation = 0;
     rpm = 0;
@@ -23,11 +24,17 @@ export default class Play extends Phaser.Scene {
     duration = DEFAULT_DURATION_IN_MS;
     hitSound;
 
+    /**
+     * 
+     */
     constructor() {
         super('play');
         this.player = new StickPerson(this);
     }
 
+    /**
+     * 
+     */
     preload() {
         this.player.loadSceneAssets();
         // add audio 
@@ -39,6 +46,9 @@ export default class Play extends Phaser.Scene {
         });
     }
 
+    /**
+     * 
+     */
     create() {
         this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -78,7 +88,7 @@ export default class Play extends Phaser.Scene {
         this.player.createSceneFeatures();
         
         // Rotate rectangle
-        const tween = this.tweens.addCounter({
+        this.rectangleTween = this.tweens.addCounter({
             from: 0,
             to: -360,
             duration: this.duration,
@@ -103,6 +113,9 @@ export default class Play extends Phaser.Scene {
         });
     }
 
+    /**
+     * Game loop
+     */
     update() {
         if (this.cursors.right.isDown) {
             this.player.runRight();
@@ -124,11 +137,16 @@ export default class Play extends Phaser.Scene {
         }
     }
 
+    /**
+     * Reset the game state
+     */
     resetGame() {
         this.player.reset();
         this.duration = DEFAULT_DURATION_IN_MS;
         this.rotation = 0;
         this.deadLastUpdate = false;
+
+        this.rectangleTween.duration = this.duration;
 
         this.rpm = MILLISECONDS_PER_MINUTE / this.duration;
         this.text.setText([
