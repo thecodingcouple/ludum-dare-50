@@ -13,8 +13,15 @@ const config = {
     scene: [ Start, Play, GameOver ],
     physics: {
         default: 'matter',
-        debug: true
+        debug: true,
+        matter: {
+           setBounds: {
+               bottom: false
+           } 
+        }
     }
 };
+
+console.dir(config);
 
 export default new Phaser.Game(config);

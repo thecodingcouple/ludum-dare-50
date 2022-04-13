@@ -103,8 +103,8 @@ export default class StickPerson {
             let rightArm = matter.bodies.rectangle(this.centerX + this.width * 0.45, this.centerY, 5, this.height * 0.25, {isSensor: true});
             let fullBody = matter.body.create({
                 parts: [torso, leftArm, rightArm, legs],
-                friction: 0.2,
-                restitution: 0.05,
+                friction: 0.0025,
+                restitution: 0.00,
             });
 
             this.matterSprite = matter.add.sprite(this.startX, this.startY, 'stick-person');

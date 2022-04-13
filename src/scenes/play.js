@@ -83,7 +83,7 @@ export default class Play extends Phaser.Scene {
 
         // Added physics
         this.matter.add.gameObject(this.rectangle, {isStatic: true, label: 'box'});
-        //this.rectangle.setFriction(1, 0, Infinity);
+        this.rectangle.setFriction(1, 0, 0.0225);
 
         this.player.createSceneFeatures();
         
