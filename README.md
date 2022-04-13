@@ -55,6 +55,7 @@ npm run build
 ```
 npm run deploy
 ```
+Alternatively:
 
 ```
 git add dist && git commit -m "updating gh-pages"
