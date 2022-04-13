@@ -141,17 +141,23 @@ export default class Play extends Phaser.Scene {
      * Reset the game state
      */
     resetGame() {
+        
+        this.rectangleTween.pause();
+
         this.player.reset();
         this.duration = DEFAULT_DURATION_IN_MS;
         this.rotation = 0;
         this.deadLastUpdate = false;
 
-        this.rectangleTween.duration = this.duration;
+        this.rectangleTween.update('duration', this.duration);
 
         this.rpm = MILLISECONDS_PER_MINUTE / this.duration;
         this.text.setText([
             `Rotation: ${this.rotation}`,
             `RPM: ${this.rpm.toFixed(2)}`
         ]);
+
+        this.rectangleTween.resume();
+        this.rectangleTween.restart();
     }
 }
