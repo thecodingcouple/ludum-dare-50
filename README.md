@@ -50,6 +50,17 @@ npm run start
 npm run build
 ```
 
+### Deploy to gh-pages
+
+```
+npm run deploy
+```
+
+```
+git add dist && git commit -m "updating gh-pages"
+git subtree push --prefix dist origin gh-pages
+```
+
 ## License (MIT)
 
 MIT License
