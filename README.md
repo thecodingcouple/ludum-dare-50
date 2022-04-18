@@ -6,6 +6,11 @@ Source code for our Ludum Dare 50 entry. The theme is "delay the inevitable." [P
 
 Don't Fall is a 2D platformer. The goal of the game is to stay on top of the rotating rectangle as long as possible.
 
+How to play:
+* `Left Arrow` to move left
+* `Right Arrow` to move right
+* `Up Arrow` or `Space` to jump
+
 ## Built With
 
 * [Phase Game Framework](https://phaser.io/)
