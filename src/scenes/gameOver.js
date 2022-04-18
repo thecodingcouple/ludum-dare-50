@@ -35,7 +35,7 @@ export default class GameOver extends Phaser.Scene {
         });
         gameOverText.setStroke(HTML_TEAL_HEX_COLOR, 16);
 
-        this.add.text(255, 300, "press any key to continue", {
+        this.add.text(255, 305, "press any key to continue", {
             font: '24px Fredoka One',
             fill: HTML_DARK_BLUE_HEX_COLOR,
             align: "center"
