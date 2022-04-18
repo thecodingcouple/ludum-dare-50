@@ -32,6 +32,7 @@ Don't Fall is a 2D platformer. The goal of the game is to stay on top of the rot
 * Sprite movement and jumping with matter
     * https://phaser.io/examples/v3/view/tilemap/collision/matter-platformer-with-wall-jumping
 * [Deploying to gh-pages](https://gist.github.com/cobyism/4730490?permalink_comment_id=3611980#gistcomment-3611980)
+* [Preloading fonts in phaser](https://phaser.discourse.group/t/loading-fonts-in-phaser-3-not-working/8898/2)
 
 ## Project Setup
 
