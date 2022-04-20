@@ -78,12 +78,15 @@ export default class Play extends Phaser.Scene {
         this.rectangle = this.add.rectangle(400, 300, 400, 400);
         this.rectangle.setStrokeStyle(5, DARK_BLUE_HEXCODE);
 
+        // platform
+        //let obstacle = this.add.rectangle(275, 80, 25, 25, DARK_BLUE_HEXCODE);
+
         // midpoint circle
         let circle = this.add.circle(400, 300, 20, DARK_BLUE_HEXCODE);
 
         // Added physics
         this.matter.add.gameObject(this.rectangle, {isStatic: true, label: 'box'});
-        this.rectangle.setFriction(1, 0, 0.0225);
+        this.rectangle.setFriction(1, 0, 0.05);
 
         this.player.createSceneFeatures();
         

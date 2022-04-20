@@ -103,14 +103,16 @@ export default class StickPerson {
             let rightArm = matter.bodies.rectangle(this.centerX + this.width * 0.45, this.centerY, 5, this.height * 0.25, {isSensor: true});
             let fullBody = matter.body.create({
                 parts: [torso, leftArm, rightArm, legs],
-                friction: 0.0025,
-                restitution: 0.00,
+                friction: 0.001,
+                frictionAir: 0,
+                restitution: 0.0001,
             });
 
             this.matterSprite = matter.add.sprite(this.startX, this.startY, 'stick-person');
 
             this.matterSprite.setExistingBody(fullBody)
                              .setFixedRotation()
+
                              .setPosition(this.startX, this.startY);
             console.dir(this.matterSprite);
             console.dir(this.startX);
@@ -123,10 +125,10 @@ export default class StickPerson {
             });
 
             matter.world.on('collisionactive', (event) => {
-                for (var i = 0; i < event.pairs.length; i++)
+                for (let i = 0; i < event.pairs.length; i++)
                 {
-                    var bodyA = event.pairs[i].bodyA;
-                    var bodyB = event.pairs[i].bodyB;
+                    let bodyA = event.pairs[i].bodyA;
+                    let bodyB = event.pairs[i].bodyB;
     
                     if (bodyA === fullBody || bodyB === fullBody)
                     {
@@ -148,36 +150,59 @@ export default class StickPerson {
             });
 
     }
+    _capVelocity() {
+        if (this.matterSprite.body.velocity.x > 5)
+            this.matterSprite.setVelocityX(5);        
+        if (this.matterSprite.body.velocity.x < 0)
+            this.matterSprite.setVelocityX(0);
+        if (this.matterSprite.body.velocity.x < -5)
+            this.matterSprite.setVelocityX(-5);       
+        if (this.matterSprite.body.velocity.x > 0)
+            this.matterSprite.setVelocityX(0);
+        if (this.matterSprite.body.velocity.y < -10)
+            this.matterSprite.setVelocityY(-10);        
+        if (this.matterSprite.body.velocity.y > 10 && this.isStanding)
+            this.matterSprite.setVelocityY(10);
+    }
 
     runLeft() {
         if (!this.isBlockedLeft) {
             this.matterSprite.anims.play("run-left");
-            this.matterSprite.setVelocityX(-1);
+            
+        
+        this.matterSprite.applyForce({x: -0.00025, y:0});
         } else {
             this.matterSprite.anims.play("idle");
         }
+        this._capVelocity();
     }
 
     runRight() {
         if (!this.isBlockedRight) {
             this.matterSprite.anims.play("run-right");
-            this.matterSprite.setVelocityX(1);
+            this.matterSprite.applyForce({x: 0.00025, y:0});
         } else {
             this.matterSprite.anims.play("idle");
         }
+        this._capVelocity();
     }
 
     jump() {
         if (this.isStanding) {
             this.scene.sound.play("jump");
             this.matterSprite.anims.play("jump");
-            this.matterSprite.setVelocityY(-5);
+            this.matterSprite.applyForce({x: 0.0000, y:-0.00075});
         } else {
             this.matterSprite.anims.play("idle");
         }
+        this._capVelocity();
     }
 
     stopRunning() {
+        this._capVelocity();
+        if (this.isStanding) {
+            this.matterSprite.setVelocityX(0);
+        }
         this.matterSprite.anims.play("idle");
     }
 
