@@ -5,9 +5,9 @@ import StickPerson from '../stickPerson';
 import { 
     DEFAULT_DURATION_IN_MS,
     DARK_BLUE_HEXCODE, 
+    HTML_DARK_BLUE_HEX_COLOR,
     MIN_DURATION,
-    MILLISECONDS_PER_MINUTE,
-    SPACE_KEYBOARD_CODE } from '../constants.js';
+    MILLISECONDS_PER_MINUTE } from '../constants.js';
 
 // Asset Imports
 import backgroundMusic from '../../public/assets/music/loop.wav';
@@ -23,6 +23,7 @@ export default class Play extends Phaser.Scene {
     speed = 0.25;
     duration = DEFAULT_DURATION_IN_MS;
     hitSound;
+    isMusicMuted = false;
 
     /**
      * Contructor
@@ -55,7 +56,7 @@ export default class Play extends Phaser.Scene {
         // game text
         this.text = this.add.text(20, 10, '', {
             font: '24px Fredoka One',
-            fill: "#181d31"
+            fill: HTML_DARK_BLUE_HEX_COLOR
         });
 
         
@@ -65,15 +66,31 @@ export default class Play extends Phaser.Scene {
             `RPM: ${this.rpm.toFixed(2)}`
         ]);
 
+        this.add.text(625, 575, "toggle volume with m", {
+            font: '16px Fredoka One',
+            fill: HTML_DARK_BLUE_HEX_COLOR,
+            align: "right"
+        });
+
         // background music loop
         let backgroundMusic = this.sound.add('background-music');
         backgroundMusic.loop = true;
         backgroundMusic.play()
 
+        // toggle muting music on m keypress
+        this.input.keyboard.on('keydown-M', () => {
+            if (!this.isMusicMuted) {
+                this.sound.volume = 0;
+                this.isMusicMuted = true;
+            } else {
+                this.sound.volume = 1;
+                this.isMusicMuted = false;
+            }
+        }, this);
+
         // game sound effects
         this.hitSound = this.sound.add('hit');
         
-
         // main rectangle
         this.rectangle = this.add.rectangle(400, 300, 400, 400);
         this.rectangle.setStrokeStyle(5, DARK_BLUE_HEXCODE);
@@ -144,7 +161,6 @@ export default class Play extends Phaser.Scene {
      * Reset the game state
      */
     resetGame() {
-        
         this.rectangleTween.pause();
 
         this.player.reset();
