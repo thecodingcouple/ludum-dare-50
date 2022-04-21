@@ -58,9 +58,11 @@ export default class Start extends Phaser.Scene {
             },
         });
 
-        
-
         this.input.on('pointerup', function (pointer) {
+            this.scene.switch('play');
+        }, this);
+
+        this.input.keyboard.on('keyup', () => {
             this.scene.switch('play');
         }, this);
     }
