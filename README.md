@@ -1,6 +1,6 @@
 # ludum-dare-50
 
-Source code for our Ludum Dare 50 entry. The theme is "delay the inevitable." [Play it here](https://thecodingcouple.github.io/ludum-dare-50/)! (Work in progress)
+Source code for our unofficial Ludum Dare 50 entry. The theme is "delay the inevitable." [Play it here](https://thecodingcouple.github.io/ludum-dare-50/)! (Work in progress)
 
 ## Synopsis
 
