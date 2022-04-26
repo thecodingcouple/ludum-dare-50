@@ -72,21 +72,30 @@ export default class Play extends Phaser.Scene {
 
         // game sound effects
         this.hitSound = this.sound.add('hit');
-        
-
-        // main rectangle
-        this.rectangle = this.add.rectangle(400, 300, 400, 400);
-        this.rectangle.setStrokeStyle(5, DARK_BLUE_HEXCODE);
-
-        // platform
-        //let obstacle = this.add.rectangle(275, 80, 25, 25, DARK_BLUE_HEXCODE);
 
         // midpoint circle
-        let circle = this.add.circle(400, 300, 20, DARK_BLUE_HEXCODE);
+        this.add.circle(400, 300, 20, DARK_BLUE_HEXCODE);
+
+        this.rectangle = this.add.rectangle(0, 0, 400, 400);
+        this.rectangle.setStrokeStyle(5, DARK_BLUE_HEXCODE);
+
+        this.obstacle = this.add.rectangle(100, 250, 25, 25, DARK_BLUE_HEXCODE);
+
+        this.container = this.add.container(0, 0, [this.rectangle, this.obstacle]);
+        this.container = this.matter.add.gameObject(this.container);
+     
+        // Added physics
+        let mainPlatformBody = this.matter.bodies.rectangle(200, 200, 400, 400);
+        let obstacleBody = this.matter.bodies.rectangle(300, 450, 25, 25);
+        let fullPlatformBody = this.matter.body.create({
+           parts: [mainPlatformBody, obstacleBody],
+           isStatic: true
+        });
+        this.container.setExistingBody(fullPlatformBody).setPosition(400, 300);
 
         // Added physics
-        this.matter.add.gameObject(this.rectangle, {isStatic: true, label: 'box'});
-        this.rectangle.setFriction(1, 0, 0.05);
+        //this.matter.add.gameObject(this.rectangle, {isStatic: true, label: 'box'});
+        //this.rectangle.setFriction(1, 0, 0.05);
 
         this.player.createSceneFeatures();
         
@@ -97,7 +106,7 @@ export default class Play extends Phaser.Scene {
             duration: this.duration,
             repeat: -1,
             onUpdate: (tween) => {
-                this.rectangle.angle = tween.getValue();
+                this.container.angle = tween.getValue();
             },
             onRepeat: (tween) => {
                 this.rotation += 1;
