@@ -27,6 +27,11 @@ a {
     text-decoration: none;
 }
 
+header:hover > a,
+footer:hover > a {
+    color: var(--medium-beige);
+}
+
 main {
     flex-grow: 1;
     display: flex;
