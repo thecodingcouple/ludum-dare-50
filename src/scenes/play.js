@@ -137,6 +137,7 @@ export default class Play extends Phaser.Scene {
            parts: [mainPlatformBody, ...obstacleBodies],
            isStatic: true
         });
+        this.container.setExistingBody(fullPlatformBody).setPosition(400, 300);
 
         // Added physics
         //this.matter.add.gameObject(this.rectangle, {isStatic: true, label: 'box'});
@@ -216,7 +217,7 @@ export default class Play extends Phaser.Scene {
         this.rectangleTween.resume();
         this.rectangleTween.restart();
     }
-    
+
     /**
      * Create rectangles for obstacles
      * @returns array of rectangle
