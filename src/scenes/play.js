@@ -133,6 +133,10 @@ export default class Play extends Phaser.Scene {
      
         // Added physics
         let mainPlatformBody = this.matter.bodies.rectangle(200, 200, 400, 400);
+        mainPlatformBody.friction = 0;
+        mainPlatformBody.frictionAir = 0;
+        mainPlatformBody.frictionStatic = 0;
+        console.dir(mainPlatformBody);
         let fullPlatformBody = this.matter.body.create({
            parts: [mainPlatformBody, ...obstacleBodies],
            isStatic: true
