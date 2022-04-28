@@ -103,19 +103,19 @@ export default class StickPerson {
             let rightArm = matter.bodies.rectangle(this.centerX + this.width * 0.45, this.centerY, 5, this.height * 0.25, {isSensor: true});
             let fullBody = matter.body.create({
                 parts: [torso, leftArm, rightArm, legs],
-                friction: 0.001,
+                friction: 0,
                 frictionAir: 0,
-                restitution: 0.0001,
+                frictionStatic: 0,
+                restitution: 0,
             });
 
             this.matterSprite = matter.add.sprite(this.startX, this.startY, 'stick-person');
 
             this.matterSprite.setExistingBody(fullBody)
                              .setFixedRotation()
-
                              .setPosition(this.startX, this.startY);
+
             console.dir(this.matterSprite);
-            console.dir(this.startX);
 
             matter.world.on('beforeupdate', () => {
                 this.isBlockedLeft = false;
@@ -168,9 +168,7 @@ export default class StickPerson {
     runLeft() {
         if (!this.isBlockedLeft) {
             this.matterSprite.anims.play("run-left");
-            
-        
-        this.matterSprite.applyForce({x: -0.00025, y:0});
+            this.matterSprite.applyForce({x: -0.00025, y:0});
         } else {
             this.matterSprite.anims.play("idle");
         }
