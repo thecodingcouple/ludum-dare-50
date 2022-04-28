@@ -98,6 +98,13 @@ export default class Play extends Phaser.Scene {
         this.rectangle.setStrokeStyle(5, DARK_BLUE_HEXCODE);
 
         const obstacleConfig = [
+            // Side 1
+            {
+                width: 15,
+                height: 25,
+                x: 75,
+                y: 215
+            },
             {
                 width: 25,
                 height: 25,
@@ -107,21 +114,84 @@ export default class Play extends Phaser.Scene {
             {
                 width: 15,
                 height: 25,
-                x: 75,
-                y: 215
-            },
-            {
-                width: 15,
-                height: 25,
                 x: 175,
                 y: 215
             },
             {
+                width: 25,
+                height: 25,
+                x: 50,
+                y: 250
+            },
+            // Side 2
+            {
                 width: 15,
                 height: 35,
-                x: -275,
-                y: 25
-            }
+                x: -225,
+                y: 0
+            },
+            {
+                width: 20,
+                height: 20,
+                x: -215,
+                y: -50
+            },
+            // Side 3
+            {
+                width: 15,
+                height: 35,
+                x: 225,
+                y: 0
+            },
+            {
+                width: 20,
+                height: 20,
+                x: 215,
+                y: 50
+            },
+            // Side 4
+            {
+                width: 15,
+                height: 15,
+                x: -140,
+                y: -230
+            },
+            {
+                width: 15,
+                height: 15,
+                x: -100,
+                y: -210
+            },
+            {
+                width: 15,
+                height: 15,
+                x: -60,
+                y: -230
+            },
+            {
+                width: 15,
+                height: 15,
+                x: -20,
+                y: -210
+            },
+            {
+                width: 15,
+                height: 15,
+                x: 20,
+                y: -230
+            },
+            {
+                width: 15,
+                height: 15,
+                x: 60,
+                y: -210
+            },
+            {
+                width: 15,
+                height: 15,
+                x: 100,
+                y: -230
+            },
         ];
 
         let obstacles = this.createObstacles(obstacleConfig);
@@ -148,6 +218,8 @@ export default class Play extends Phaser.Scene {
         //this.rectangle.setFriction(1, 0, 0.05);
 
         this.player.createSceneFeatures();
+
+        let isObstacleTweening = false;
         
         // Rotate rectangle
         this.rectangleTween = this.tweens.addCounter({
@@ -171,6 +243,19 @@ export default class Play extends Phaser.Scene {
                 if(tween.data[0].duration > MIN_DURATION) {
                     tween.data[0].duration -= 500;
                 }
+
+                // if(!isObstacleTweening) {
+                //     this.tweens.add({
+                //         targets: obstacleBodies[0],
+                //         scaleX: 0.25,
+                //         scaleY: 0.5,
+                //         yoyo: true,
+                //         repeat: -1,
+                //         ease: 'Sine.easeInOut'
+                //     });
+
+                //     isObstacleTweening = true;
+                //}
             }
         });
     }
