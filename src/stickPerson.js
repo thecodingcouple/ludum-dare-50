@@ -23,7 +23,7 @@ export default class StickPerson {
         this.startX = 400;
         this.startY = 100;
         this.centerX = this.width / 2;
-        this.centerY = this.width / 2;
+        this.centerY = this.height / 2;
     }
 
     get isDead() {

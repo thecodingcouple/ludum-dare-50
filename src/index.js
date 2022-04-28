@@ -17,7 +17,8 @@ const config = {
         matter: {
            setBounds: {
                bottom: false
-           } 
+           } ,
+           debug: true,
         }
     }
 };

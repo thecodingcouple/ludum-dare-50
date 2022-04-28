@@ -90,20 +90,58 @@ export default class Play extends Phaser.Scene {
 
         // game sound effects
         this.hitSound = this.sound.add('hit');
-        
-        // main rectangle
-        this.rectangle = this.add.rectangle(400, 300, 400, 400);
-        this.rectangle.setStrokeStyle(5, DARK_BLUE_HEXCODE);
-
-        // platform
-        //let obstacle = this.add.rectangle(275, 80, 25, 25, DARK_BLUE_HEXCODE);
 
         // midpoint circle
-        let circle = this.add.circle(400, 300, 20, DARK_BLUE_HEXCODE);
+        this.add.circle(400, 300, 20, DARK_BLUE_HEXCODE);
+
+        this.rectangle = this.add.rectangle(0, 0, 400, 400);
+        this.rectangle.setStrokeStyle(5, DARK_BLUE_HEXCODE);
+
+        const obstacleConfig = [
+            {
+                width: 25,
+                height: 25,
+                x: 100,
+                y: 250
+            },
+            {
+                width: 15,
+                height: 25,
+                x: 75,
+                y: 215
+            },
+            {
+                width: 15,
+                height: 25,
+                x: 175,
+                y: 215
+            },
+            {
+                width: 15,
+                height: 35,
+                x: -275,
+                y: 25
+            }
+        ];
+
+        let obstacles = this.createObstacles(obstacleConfig);
+        let obstacleBodies = this.createObstacleBodies(obstacleConfig);
+
+        // Add game objects to container
+        this.container = this.add.container(0, 0, [this.rectangle, ...obstacles]);
+        this.container = this.matter.add.gameObject(this.container);
+     
+        // Added physics
+        let mainPlatformBody = this.matter.bodies.rectangle(200, 200, 400, 400);
+        let fullPlatformBody = this.matter.body.create({
+           parts: [mainPlatformBody, ...obstacleBodies],
+           isStatic: true
+        });
+        this.container.setExistingBody(fullPlatformBody).setPosition(400, 300);
 
         // Added physics
-        this.matter.add.gameObject(this.rectangle, {isStatic: true, label: 'box'});
-        this.rectangle.setFriction(1, 0, 0.05);
+        //this.matter.add.gameObject(this.rectangle, {isStatic: true, label: 'box'});
+        //this.rectangle.setFriction(1, 0, 0.05);
 
         this.player.createSceneFeatures();
         
@@ -114,7 +152,7 @@ export default class Play extends Phaser.Scene {
             duration: this.duration,
             repeat: -1,
             onUpdate: (tween) => {
-                this.rectangle.angle = tween.getValue();
+                this.container.angle = tween.getValue();
             },
             onRepeat: (tween) => {
                 this.rotation += 1;
@@ -178,5 +216,27 @@ export default class Play extends Phaser.Scene {
 
         this.rectangleTween.resume();
         this.rectangleTween.restart();
+    }
+
+    /**
+     * Create rectangles for obstacles
+     * @returns array of rectangle
+     */
+    createObstacles(config) {
+        const obstacles = config.map(o => this.add.rectangle(
+            o.x, o.y, o.width, o.height, DARK_BLUE_HEXCODE));
+
+        return obstacles;
+    }
+
+    /**
+     * Create physic bodies for obstacles
+     * @returns array of Physic bodies
+     */
+    createObstacleBodies(config) {
+        const obstacleBodies = config.map(o => this.matter.bodies.rectangle(
+            o.x + 200, o.y + 200, o.width, o.height));
+
+        return obstacleBodies;
     }
 }
