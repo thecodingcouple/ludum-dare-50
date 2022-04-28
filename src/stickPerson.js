@@ -159,10 +159,10 @@ export default class StickPerson {
             this.matterSprite.setVelocityX(-5);       
         if (this.matterSprite.body.velocity.x > 0)
             this.matterSprite.setVelocityX(0);
-        if (this.matterSprite.body.velocity.y < -10)
-            this.matterSprite.setVelocityY(-10);        
-        if (this.matterSprite.body.velocity.y > 10 && this.isStanding)
-            this.matterSprite.setVelocityY(10);
+        if (this.matterSprite.body.velocity.y < -7)
+            this.matterSprite.setVelocityY(-7);        
+        if (this.matterSprite.body.velocity.y > 5 && this.isStanding)
+            this.matterSprite.setVelocityY(5);
     }
 
     runLeft() {

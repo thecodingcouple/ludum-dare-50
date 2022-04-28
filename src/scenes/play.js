@@ -100,12 +100,6 @@ export default class Play extends Phaser.Scene {
         const obstacleConfig = [
             // Side 1
             {
-                width: 15,
-                height: 25,
-                x: 75,
-                y: 215
-            },
-            {
                 width: 25,
                 height: 25,
                 x: 100,
@@ -118,9 +112,27 @@ export default class Play extends Phaser.Scene {
                 y: 215
             },
             {
+                width: 15,
+                height: 25,
+                x: 75,
+                y: 215
+            },
+            {
                 width: 25,
                 height: 25,
                 x: 50,
+                y: 250
+            },
+            {
+                width: 15,
+                height: 25,
+                x: 25,
+                y: 215
+            },
+            {
+                width: 25,
+                height: 25,
+                x: 0,
                 y: 250
             },
             // Side 2
@@ -241,21 +253,21 @@ export default class Play extends Phaser.Scene {
 
                 // decrease duration
                 if(tween.data[0].duration > MIN_DURATION) {
-                    tween.data[0].duration -= 500;
+                    tween.data[0].duration -= 750;
                 }
 
-                // if(!isObstacleTweening) {
-                //     this.tweens.add({
-                //         targets: obstacleBodies[0],
-                //         scaleX: 0.25,
-                //         scaleY: 0.5,
-                //         yoyo: true,
-                //         repeat: -1,
-                //         ease: 'Sine.easeInOut'
-                //     });
+                if(!isObstacleTweening) {
+                    this.tweens.add({
+                        targets: obstacleBodies[0],
+                        scaleX: 0.25,
+                        scaleY: 0.5,
+                        yoyo: true,
+                        repeat: -1,
+                        ease: 'Sine.easeInOut'
+                    });
 
-                //     isObstacleTweening = true;
-                //}
+                    isObstacleTweening = true;
+                }
             }
         });
     }
