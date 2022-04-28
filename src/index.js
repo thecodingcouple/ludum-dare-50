@@ -18,11 +18,9 @@ const config = {
            setBounds: {
                bottom: false
            } ,
-           debug: true,
+           debug: false,
         }
     }
 };
-
-console.dir(config);
 
 export default new Phaser.Game(config);
